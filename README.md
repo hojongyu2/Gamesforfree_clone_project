@@ -1,1 +1,3 @@
 # Gamesforfree_clone_project
+
+This project is a recreation of the popular gaming website FreetoGame. The project will include features such as user login and registration, search and sorting capabilities, the ability to add games to a personal library, as well as the ability for users to leave a review and a rating for each game, allowing for a more interactive and engaging experience. Additionally, I am incorporating extra features that do not exist in the original FreetoGame website, such as pagination for browsing large collections of games, and authentication through Google's Gmail service.
