@@ -4,4 +4,5 @@ from .models import *
 # Create your views here.
 
 def home(request):
-    return HttpResponse("<h1>hey</h1>")
+    the_index = open('static/index.html')
+    return HttpResponse(the_index)
