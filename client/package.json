@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "//comment":"running the build continuously upon saving any file on React Project",
+    "watch": "vite build --watch",
     "preview": "vite preview"
   },
   "dependencies": {
