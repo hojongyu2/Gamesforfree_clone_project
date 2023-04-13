@@ -16,9 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.http import HttpResponse
 
+#returns the index.html file from a React project
+def serve_react_app_index(request):
+    index_html = open('static/index.html')
+    return HttpResponse(index_html)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('users.urls')),
+    path('', serve_react_app_index),
+    path('user', include('users.urls')),
+    path('game', include('games.urls')),
+    path('review', include('reviews.urls')),
+    path('rating', include('ratings.urls')),
 ]
