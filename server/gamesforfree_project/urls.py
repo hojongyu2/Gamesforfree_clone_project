@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.http import HttpResponse
 
 #returns the index.html file from a React project
@@ -25,9 +25,9 @@ def serve_react_app_index(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', serve_react_app_index),
     path('user', include('users.urls')),
     path('game', include('games.urls')),
     path('review', include('reviews.urls')),
     path('rating', include('ratings.urls')),
+    re_path('', serve_react_app_index),
 ]
