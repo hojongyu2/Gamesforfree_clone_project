@@ -25,9 +25,9 @@ def serve_react_app_index(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user', include('users.urls')),
-    path('game', include('games.urls')),
-    path('review', include('reviews.urls')),
-    path('rating', include('ratings.urls')),
+    path('user/', include('users.urls')),
+    path('game/', include('games.urls')),
+    path('review/', include('reviews.urls')),
+    path('rating/', include('ratings.urls')),
     re_path('', serve_react_app_index),
 ]

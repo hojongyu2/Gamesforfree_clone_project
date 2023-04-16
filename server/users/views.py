@@ -21,10 +21,10 @@ def auth_user(request):
         try:
             new_user = User.objects.create_user(username = email, email=email, first_name=first_name, last_name=last_name, password=password, profile_pic=profile_pic)
             new_user.save()
-            return JsonResponse({'success:': True})
+            return JsonResponse({'success': True})
         except Exception as e:
-            print(e)
-            return JsonResponse({'success': False})
+            print('this is error message: ', e)
+            return JsonResponse({'success': False, 'message': str(e)})
         
     #only user to log in if received data from the client side has a key 'login'.
     elif 'login' in request.data and request.method == "POST":
