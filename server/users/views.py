@@ -50,12 +50,16 @@ def auth_user(request):
     
     elif 'logout' in request.data and request.method == 'PUT':
         try:
+            # print('_auth_user_id' in request.session)
             # when logout is called, it will clears the user's session data so it prevent other user's to access previous user's session data.
             logout(request)
-            return JsonResponse({'success': True})
+            if '_auth_user_id' not in request.session: #To check if the session has been cleared
+                return JsonResponse({'success': True})
+            else:
+                return JsonResponse({'success': False})
         except Exception as e:
             print(e)
-            return JsonResponse({'success': False})
+            return JsonResponse({'success': False, 'message': 'An error occurred while logging out'})
         
     elif request.method == 'GET':
         if request.user.is_authenticated:
