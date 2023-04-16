@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from django.http import HttpResponse
+from django.conf import settings
+from django.conf.urls.static import static 
 
 #returns the index.html file from a React project
 def serve_react_app_index(request):
@@ -30,4 +32,6 @@ urlpatterns = [
     path('review/', include('reviews.urls')),
     path('rating/', include('ratings.urls')),
     re_path('', serve_react_app_index),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# This tells Django to serve the files located in settings.MEDIA_ROOT when a request comes in for a URL starting with /media/.
+# need to import static as well

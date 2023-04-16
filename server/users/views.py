@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpRequest
 from django.contrib.auth import authenticate, login, logout
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, parser_classes
+from rest_framework.parsers import MultiPartParser
 from django.core.serializers import serialize
 import json
 from .models import *
@@ -9,6 +10,7 @@ from .models import *
 # Create your views here.
 
 @api_view(['POST', 'PUT', 'GET'])
+@parser_classes([MultiPartParser]) ## Handle file uploads submitted as part of a multipart/form-data request.
 def auth_user(request):
     #only create a user if data from the client side has a key 'signup".
     if 'signup' in request.data and request.method == "POST":
@@ -17,7 +19,8 @@ def auth_user(request):
         password = request.data['password']
         first_name = request.data['first_name']
         last_name = request.data['last_name']
-        profile_pic = request.data['profile_pic']
+        profile_pic = request.FILES.get('profile_pic', None) ## allowes to get file like data and if not present, then set it as none.
+        # profile_pic = request.data['profile_pic']
         try:
             new_user = User.objects.create_user(username = email, email=email, first_name=first_name, last_name=last_name, password=password, profile_pic=profile_pic)
             new_user.save()
