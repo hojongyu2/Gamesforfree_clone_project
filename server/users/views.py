@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpRequest
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.decorators import api_view, parser_classes
-from rest_framework.parsers import MultiPartParser
+from rest_framework.parsers import MultiPartParser, JSONParser
 from django.core.serializers import serialize
 import json
 from .models import *
@@ -10,7 +10,9 @@ from .models import *
 # Create your views here.
 
 @api_view(['POST', 'PUT', 'GET'])
-@parser_classes([MultiPartParser]) ## Handle file uploads submitted as part of a multipart/form-data request.
+# JSONParser will handle when JSON object data type is received.
+# MultiPartParser will handle multipart/form-data request, such as file or mix of files. 
+@parser_classes([MultiPartParser, JSONParser])
 def auth_user(request):
     #only create a user if data from the client side has a key 'signup".
     if 'signup' in request.data and request.method == "POST":
