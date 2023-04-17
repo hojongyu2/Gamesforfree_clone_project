@@ -15,8 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.http import HttpResponse
+from django.conf import settings
+from django.conf.urls.static import static 
 
 #returns the index.html file from a React project
 def serve_react_app_index(request):
@@ -25,9 +27,11 @@ def serve_react_app_index(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', serve_react_app_index),
-    path('user', include('users.urls')),
-    path('game', include('games.urls')),
-    path('review', include('reviews.urls')),
-    path('rating', include('ratings.urls')),
-]
+    path('user/', include('users.urls')),
+    path('game/', include('games.urls')),
+    path('review/', include('reviews.urls')),
+    path('rating/', include('ratings.urls')),
+    re_path('', serve_react_app_index),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# This tells Django to serve the files located in settings.MEDIA_ROOT when a request comes in for a URL starting with /media/.
+# need to import static as well
