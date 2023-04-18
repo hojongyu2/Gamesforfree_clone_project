@@ -3,5 +3,7 @@
 .env
 env
 __pycache__/
+__pycache__
 media
 static/assets/
+/__pycache__/
