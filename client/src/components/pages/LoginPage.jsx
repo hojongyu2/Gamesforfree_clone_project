@@ -12,7 +12,7 @@ import { userLogin } from '../../utilities/userAuthAxios';
 
 export default function LoginPage() {
     const navigate = useNavigate()
-    const {user, setUser} = useContext(userContext)
+    const {signInUser} = useContext(userContext)
     const [errorMessage, setErrorMessage] = useState(null)
     const [userLoginInfo, setUserLoginInfo] = useState({
         email: "",
@@ -23,13 +23,13 @@ export default function LoginPage() {
     const onSubmitLogin = async (e, userData) => {
         e.preventDefault();
         const response = await userLogin(userData)
-        if (response === true){
+        if (response.success === true){
+            signInUser(response.username)
             navigate('/')
         }else {
             setErrorMessage('ERROR! Sorry the credentials you are using are invalid')
         }
     }
-
     const onChangeEmail = (e) => {
         setUserLoginInfo((prevState) => ({...prevState, email: e.target.value}))
     }

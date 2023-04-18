@@ -18,6 +18,10 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 
 //Link to specific url
 import { Link } from '@mui/material';
+import { useContext } from 'react';
+import { userContext } from '../context/UserContext';
+import { userLogout } from '../../utilities/userAuthAxios';
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -66,6 +70,9 @@ export default function Header() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  const { user, signOutUser } = useContext(userContext)
+  const navigate = useNavigate()
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -78,6 +85,17 @@ export default function Header() {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
+  // Logout function with handle menu close
+  const LogoutHandleMenuClose = async () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    const response = await userLogout()
+        if (response === true){
+            signOutUser()
+            navigate('/')
+        }
+  };
+
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -100,9 +118,12 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <Link href="/login"><MenuItem onClick={handleMenuClose} sx={{ color: "black" }} >Login</MenuItem></Link>
+      {user && <MenuItem onClick={LogoutHandleMenuClose}>Logout</MenuItem>}
+      {!user && <Link href="/login"><MenuItem onClick={handleMenuClose} sx={{ color: "black" }} >Login</MenuItem></Link>}
+      {!user && <Link href="/signup"><MenuItem onClick={handleMenuClose}>Register</MenuItem></Link>}
+      {/* <Link href="/login"><MenuItem onClick={handleMenuClose} sx={{ color: "black" }} >Login</MenuItem></Link>
       <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
-      <Link href="/signup"><MenuItem onClick={handleMenuClose}>Register</MenuItem></Link>
+      <Link href="/signup"><MenuItem onClick={handleMenuClose}>Register</MenuItem></Link> */}
     </Menu>
   );
 
