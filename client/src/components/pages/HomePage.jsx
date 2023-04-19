@@ -1,6 +1,10 @@
 import Layout from "../layout/Layout"
 import { useContext } from "react"
 import { userContext } from "../context/UserContext"
+import HomePageGetStarted from "../cards/HomepageGetStarted"
+import RecommendationCard from "../cards/RecommendationCard"
+import GameCard from "../cards/GameCard"
+import { Box } from "@mui/material"
 
 export const Homepage = () => {
 
@@ -8,8 +12,11 @@ export const Homepage = () => {
 
     return (
         <Layout>
-            <h1>This is from React HomePage</h1>
-
+            <Box>
+                <HomePageGetStarted />
+                <RecommendationCard />
+                <GameCard />
+            </Box>
         </Layout>
     )
 }

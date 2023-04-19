@@ -8,7 +8,7 @@ export default function UserContextProvider(props){
     const [ user, setUser ] = useState(null)
     const signInUser = (userData) => setUser(userData)
     const signOutUser = () => setUser(undefined)
-    console.log(user)
+
     return (
         <userContext.Provider value={{user, setUser, signInUser, signOutUser }}>
             {children}

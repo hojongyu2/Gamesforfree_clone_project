@@ -121,9 +121,6 @@ export default function Header() {
       {user && <MenuItem onClick={LogoutHandleMenuClose}>Logout</MenuItem>}
       {!user && <Link href="/login"><MenuItem onClick={handleMenuClose} sx={{ color: "black" }} >Login</MenuItem></Link>}
       {!user && <Link href="/signup"><MenuItem onClick={handleMenuClose}>Register</MenuItem></Link>}
-      {/* <Link href="/login"><MenuItem onClick={handleMenuClose} sx={{ color: "black" }} >Login</MenuItem></Link>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
-      <Link href="/signup"><MenuItem onClick={handleMenuClose}>Register</MenuItem></Link> */}
     </Menu>
   );
 
@@ -228,7 +225,9 @@ export default function Header() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+
+              {user && (`${user}`)}
+              {!user && <AccountCircle />}
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

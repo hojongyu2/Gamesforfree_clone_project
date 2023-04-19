@@ -44,7 +44,7 @@ export const userSignUp = async (userDataObj) => {
 
 export const userLogin = async (userDataObj) => {
     const {email, password, login} = userDataObj
-    const response = await axiosWithCSRF.post("user/", {
+    const response = await axiosWithCSRF.post("user", {
         email,
         password,
         login,
@@ -53,7 +53,7 @@ export const userLogin = async (userDataObj) => {
 }
 
 export const userLogout = async () => {
-    const response = await axiosWithCSRF.put("user/", {
+    const response = await axiosWithCSRF.put("user", {
         logout: true
     })
     return response.data.success
