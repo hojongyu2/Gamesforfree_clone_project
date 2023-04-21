@@ -6,15 +6,20 @@ import requests
 import random
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
+#dot
+import os
+from dotenv import load_dotenv
+load_dotenv()
 # Create your views here.
 
 @api_view(['GET'])
 def get_games(request):
     try:
         ## reference from https://rapidapi.com/digiwalls/api/free-to-play-games-database
+        rapidapi_key = os.getenv("RAPIDAPI_KEY")
         endpoint = "https://free-to-play-games-database.p.rapidapi.com/api/games"
         headers = {
-            "X-RapidAPI-Key": "3c71b2383fmsh214b26af632666ep108d9fjsn5f6a9ccd4858",
+            "X-RapidAPI-Key": rapidapi_key,
             "X-RapidAPI-Host": "free-to-play-games-database.p.rapidapi.com"
         }
         
