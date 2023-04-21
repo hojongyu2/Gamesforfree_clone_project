@@ -1,21 +1,16 @@
 import Layout from "../layout/Layout"
-import { useContext } from "react"
-import { userContext } from "../context/UserContext"
 import HomePageGetStarted from "../cards/HomepageGetStarted"
-import RecommendationCard from "../cards/RecommendationCard"
-import GameCard from "../cards/GameCard"
+import RecommendationCards from "../cards/RecommendationCards"
 import { Box } from "@mui/material"
 
-export const Homepage = () => {
 
-    const {signOutUser} = useContext(userContext)
+export const Homepage = () => {
 
     return (
         <Layout>
             <Box>
                 <HomePageGetStarted />
-                <RecommendationCard />
-                <GameCard />
+                <RecommendationCards />
             </Box>
         </Layout>
     )
