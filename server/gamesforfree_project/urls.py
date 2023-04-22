@@ -26,7 +26,7 @@ def serve_react_app_index(request):
     return HttpResponse(index_html)
 
 urlpatterns = [
-    path('admin', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('user', include('users.urls')),
     path('games', include('games.urls')),
     path('review', include('reviews.urls')),

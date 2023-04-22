@@ -6,7 +6,7 @@ from games.models import Game
 
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="all_ratings")
+    game_api_id = models.IntegerField(default=0)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)

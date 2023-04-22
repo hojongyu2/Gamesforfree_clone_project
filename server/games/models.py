@@ -3,6 +3,7 @@ from users.models import User
 
 # Create your models here.
 class Game(models.Model):
+    api_id = models.IntegerField(unique=True, default=0)
     title = models.CharField(max_length=255)
     thumbnail = models.URLField()
     status = models.CharField(max_length=255)
