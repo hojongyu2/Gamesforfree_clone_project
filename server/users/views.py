@@ -66,6 +66,7 @@ def auth_user(request):
             # serializer will convert complex data into python Objects so that it can be easily stored as machine/human readable format.
             user_info = serialize("json",  [request.user], fields = ['name', 'email'])
             parsed_user_info = json.loads(user_info) # parse a JSON string data
-            return JsonResponse(parsed_user_info[0]['fields']) # return user email
+            # print(parsed_user_info[0]['fields'])
+            return JsonResponse({'success': True, 'user': parsed_user_info[0]['fields']}) # return user email
 
         return JsonResponse({'success': False, 'user':None})
