@@ -5,3 +5,7 @@ env
 __pycache__/
 media
 static/assets/
+*.pyc
+*.pyo
+*.pyd
+*.pyc.cache
