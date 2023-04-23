@@ -3,9 +3,14 @@
 .env
 env
 __pycache__/
+__pycache__
 media
 static/assets/
+<<<<<<< HEAD
 *.pyc
 *.pyo
 *.pyd
 *.pyc.cache
+=======
+/__pycache__/
+>>>>>>> 802fd0902df63bd8f4bea14546deac4d7b3d810b
