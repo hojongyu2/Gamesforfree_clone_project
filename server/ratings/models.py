@@ -7,7 +7,6 @@ from games.models import Game
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     game_api_id = models.IntegerField(default=0)
-    content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     
@@ -22,6 +21,11 @@ class Rating(models.Model):
     )
     
     value = models.CharField(max_length=10, choices=RATING_CHOICES)
-
+    
+    ## unique constraint to prevent a user from making multiple ratings for a single game
+    ## This will raise an error If a user trying to leave more than one rating for a same game
+    class Meta:
+        unique_together = ('user', 'game_api_id')
+        
     def __str__(self):
         return self.value

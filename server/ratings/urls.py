@@ -4,5 +4,5 @@ from django.http import HttpResponse
 from .import views
 
 urlpatterns = [
-    path('', views.ratings, name='ratings'),
+    path('', views.handle_rating, name='ratings'),
 ]
