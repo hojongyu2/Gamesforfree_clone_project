@@ -25,6 +25,7 @@ def handle_game_data(request):
                 "X-RapidAPI-Key": rapidapi_key,
                 "X-RapidAPI-Host": "free-to-play-games-database.p.rapidapi.com"
             }
+            # get three games randomly 
             if request.GET.get('get_random_three'): 
                 response = requests.request("GET", endpoint, headers=headers)
                 response_json = response.json()
@@ -33,11 +34,13 @@ def handle_game_data(request):
                 #safe=False allow JsonResponse to serialize and return the list as JSON
                 #If it was set as safe=True, then the data must be a dictionary.
             
+            # get all games
             elif request.GET.get('get_all'):
                 response = requests.request("GET", endpoint, headers=headers)
                 response_json = response.json()
                 return JsonResponse(response_json, safe=False) 
             
+            # get game by page number
             elif request.GET.get('page'):
                 response = requests.request("GET", endpoint, headers=headers)
                 response_json = response.json()
@@ -51,7 +54,7 @@ def handle_game_data(request):
                 # print(len(paginated_games))
                 return JsonResponse(paginated_games, safe=False)
 
-            
+            # get details of the game
             elif request.GET.get('get_detail'):
                 query_id = request.GET.get('get_detail') # get value from params
                 endpoint = "https://free-to-play-games-database.p.rapidapi.com/api/game"
@@ -60,6 +63,7 @@ def handle_game_data(request):
                 response_json = response.json()
                 return JsonResponse(response_json, safe=False) 
             
+            # sort and filter
             else:
                 querystring = {} 
                 # checks if the 'platform' query parameter is present in the GET request. If it exists, the code inside the if block is executed.
@@ -102,10 +106,11 @@ def handle_game_data(request):
         print(game)
         return game
     
+    # save game data to my database when user wants to add to favorite game library
     if request.method == 'POST':
         try:
             if request.user.is_authenticated:
-                game_data = request.data.dict()  # Deserialize the game data from the request body
+                game_data = request.data # Deserialize the game data from the request body
                 # print('game_data =====', game_data)
                 
                 game_object = process_game_data(game_data)
@@ -118,17 +123,17 @@ def handle_game_data(request):
                 if not created: 
                     if favorite.status == status: # If the favorite status is same as previous, DELETE
                         favorite.delete()
-                        return JsonResponse({'success': True, 'message': 'Rating undone/deleted.'})
+                        return JsonResponse({'success': True, 'message': 'status undone/deleted.'})
                     else: # Or change the status
                         favorite.status = status
                         favorite.save()
-                        return JsonResponse({'success': True, 'message': 'Rating updated.'})
+                        return JsonResponse({'success': True, 'message': 'status updated.'})
                 else: # If just created, then add status to the favorite game
                     favorite.status = status
                     favorite.save()
-                    return JsonResponse({'success': True, 'message': 'Rating added.'})
+                    return JsonResponse({'success': True, 'message': 'status added.'})
 
-                return JsonResponse({'success': True})
+                # return JsonResponse({'success': True})
             else:
                 return JsonResponse({'success': False, 'message': 'User not authenticated'})
         except Exception as e:
