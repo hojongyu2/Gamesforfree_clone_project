@@ -1,21 +1,17 @@
-import { Button } from "@mui/material"
-import { userLogout } from "../../utilities/userAuthAxios"
 import Layout from "../layout/Layout"
-import { useNavigate } from "react-router-dom"
+import HomePageGetStarted from "../cards/HomepageGetStarted"
+import RecommendationCards from "../cards/RecommendationCards"
+import { Box } from "@mui/material"
+
 
 export const Homepage = () => {
-    const navigate = useNavigate()
-    const tempLogoutButton = async () => {
-        const response = await userLogout()
-        if (response === true){
-            navigate('/')
-        }
-    }
 
     return (
         <Layout>
-            <h1>This is from React HomePage</h1>
-            <Button onClick={tempLogoutButton}>logout</Button>
+            <Box>
+                <HomePageGetStarted />
+                <RecommendationCards />
+            </Box>
         </Layout>
     )
 }

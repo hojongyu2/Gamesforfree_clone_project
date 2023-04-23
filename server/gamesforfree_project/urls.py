@@ -26,11 +26,11 @@ def serve_react_app_index(request):
     return HttpResponse(index_html)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('user/', include('users.urls')),
-    path('game/', include('games.urls')),
-    path('review/', include('reviews.urls')),
-    path('rating/', include('ratings.urls')),
+    path('admin', admin.site.urls),
+    path('user', include('users.urls')),
+    path('games', include('games.urls')),
+    path('review', include('reviews.urls')),
+    path('rating', include('ratings.urls')),
     re_path('', serve_react_app_index),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # This tells Django to serve the files located in settings.MEDIA_ROOT when a request comes in for a URL starting with /media/.

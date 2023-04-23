@@ -6,7 +6,6 @@ from rest_framework.parsers import MultiPartParser, JSONParser
 from django.core.serializers import serialize
 import json
 from .models import *
-
 # Create your views here.
 
 @api_view(['POST', 'PUT', 'GET'])
@@ -41,8 +40,8 @@ def auth_user(request):
         if current_user and current_user.is_active == True:
             try:
                 #django login function sets a session cookie in the browser containing an encrypted session ID(using user ID)
-                login(request._request, current_user) 
-                return JsonResponse({'success': True})
+                login(request._request, current_user)
+                return JsonResponse({'success': True, 'username': current_user.email})
             except Exception as e:
                 print(e)
                 return JsonResponse({'success': False})
