@@ -5,9 +5,9 @@ from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import MultiPartParser, JSONParser
 from django.core.serializers import serialize
 import json
-from .models import *
-# Create your views here.
+from .models import * # import model
 
+# Create your views here.
 @api_view(['POST', 'PUT', 'GET'])
 # JSONParser will handle when JSON object data type is received.
 # MultiPartParser will handle multipart/form-data request, such as file or mix of files. 

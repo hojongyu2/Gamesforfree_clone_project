@@ -5,7 +5,7 @@ from games.models import Game
 # Create your models here.
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_reviews", default=1)
-    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="all_reviews")
+    game_api_id = models.IntegerField(default=0)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
