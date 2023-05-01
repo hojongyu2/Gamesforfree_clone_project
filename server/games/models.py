@@ -15,9 +15,9 @@ class Game(models.Model):
     platform = models.CharField(max_length=50)
     publisher = models.CharField(max_length=255)
     developer = models.CharField(max_length=255)
-    release_Date = models.CharField(max_length=255)
+    release_date = models.CharField(max_length=255)
     freetogame_profile_url = models.URLField()
-    minumum_system_requirements = models.JSONField(null=True, blank=True)
+    minimum_system_requirements = models.JSONField(null=True, blank=True)
     screenshots = models.JSONField(null=True, blank=True)
     video_play_back = models.URLField(null=True, blank=True)
     
@@ -31,10 +31,10 @@ class Favorite_game(models.Model):
     ## sames goes for game. Each Game can be added to multiple Favorite_game records, and each Favorite_game record belongs to only one Game.
     STATUS_CHOICES = (
         ('played', 'Played'),
-        ('play_later', 'play later'),
-        ('currently_playing', 'Currently playing'),
+        ('play_later', 'Play Later'),
+        ('currently_playing', 'Currently Playing'),
     )
-    status = models.CharField(max_length=50, choices=STATUS_CHOICES)
+    my_game_status = models.CharField(max_length=50, choices=STATUS_CHOICES)
 
     def get_all_favorite_games(self):
         return Favorite_game.objects.all()
