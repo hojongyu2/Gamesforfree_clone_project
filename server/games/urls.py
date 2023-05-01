@@ -4,4 +4,5 @@ from django.http import HttpResponse
 from .import views
 urlpatterns = [
     path('', views.handle_game_data, name="game"),
+    path('games/', views.handle_game_data, name="game"),
 ]

@@ -1,11 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, QueryDict
 from rest_framework.decorators import api_view
 import json
+import re
 import requests
 import random
 from django.core.paginator import Paginator
 from django.core.serializers import serialize
+from django.db.models import F
 # import models 
 from .models import *
 #dot
@@ -14,7 +16,7 @@ from dotenv import load_dotenv
 load_dotenv()
 # Create your views here.
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'POST', 'PUT'])
 def handle_game_data(request):
     if request.method == 'GET':
         try:
@@ -50,8 +52,7 @@ def handle_game_data(request):
                 start_index = (page_number - 1) * page_size
                 end_index = start_index + page_size
 
-                paginated_games = response_json[start_index:end_index]
-                # print(len(paginated_games))
+                paginated_games = response_json[start_index:end_index] # slice the result and return
                 return JsonResponse(paginated_games, safe=False)
 
             # get details of the game
@@ -63,6 +64,66 @@ def handle_game_data(request):
                 response_json = response.json()
                 return JsonResponse(response_json, safe=False) 
             
+            # search game by name
+            elif request.GET.get('search_term'):
+                search_term = request.GET.get('search_term')
+                response = requests.request("GET", endpoint, headers=headers)
+                response_json = response.json()
+                
+                # Helper function that uses reges to remove spaces and special characters. Then change it to all lowercased
+                def filtered_title(title):
+                    return re.sub('[\W_]+', '', title).lower()
+                
+                found_games = []
+                
+                for game_data in response_json:
+                    game_title = game_data['title']
+                    filtered_game_title = filtered_title(game_title)
+                    # Append it to the found_games array when it matches with either of the conditions
+                    if search_term in filtered_game_title or search_term == filtered_game_title:
+                        found_games.append(game_data)
+                        
+                return JsonResponse(found_games, safe=False) 
+            
+            # get favorite game list
+            elif request.GET.get('my_game_list'):
+                if request.user.is_authenticated:
+                    try:
+                        # get only current users fav games. values_list will return specific value, in this case, using game instance from Favorite_game model
+                        my_game_list = Favorite_game.objects.filter(user=request.user).values_list('game', flat=True) #flat=True will return single query
+                        # print(my_game_list) This is returning queryset with only one value which is primary keys of fav games
+                        games = Game.objects.filter(id__in=my_game_list).annotate(my_game_status=F('favorite_games__my_game_status'))
+                        # annotate() allows to attach extra information to each item in the queryset. 
+                        # F allows you to perform operations on the fields of a model instance without having to fetch the actual value from the database. 
+                        fav_game_list = []
+                        for game in games:
+                            game_data = {
+                                'api_id' : game.api_id,
+                                'title' : game.title,
+                                'thumbnail' : game.thumbnail,
+                                'status' : game.status,
+                                'short_description' : game.short_description,
+                                'description' : game.description,
+                                'game_url' : game.game_url,
+                                'genre' : game.genre,
+                                'platform' : game.platform,
+                                'publisher' : game.publisher,
+                                'developer' : game.developer,
+                                'release_date' : game.release_date,
+                                'freetogame_profile_url' : game.freetogame_profile_url,
+                                'minimum_system_requirements' : game.minimum_system_requirements,
+                                'screenshots' : game.screenshots,
+                                'video_play_back' : game.video_play_back,
+                                'my_game_status' : game.my_game_status,
+                            }
+                            fav_game_list.append(game_data)
+                        return JsonResponse({'success': True, 'data': fav_game_list}, safe=False) 
+                    except Exception as e:
+                        print(e)
+                        return JsonResponse({'success': False, 'message': str(e)})
+                else:
+                    return JsonResponse({'success': False, 'message': 'User not authenticated'})
+
             # sort and filter
             else:
                 querystring = {} 
@@ -73,13 +134,15 @@ def handle_game_data(request):
                 if request.GET.get('category'):
                     querystring['category'] = request.GET['category']
 
-                if request.GET.get('sort-by'):
-                    querystring['sort-by'] = request.GET['sort-by']
+                if request.GET.get('sort_by'):
+                    querystring['sort-by'] = request.GET['sort_by']
 
-                # the requests library is used to make an HTTP GET request to the specified API endpoint and this method takes four arguments.
+                # the requests library is used to make an HTTP GET request to the specified API endpoint and this method takes four arguments.'
+
                 response = requests.request("GET", endpoint, headers=headers, params=querystring) #
                 response_json = response.json() # Turn into Python dictionary
                 return JsonResponse(response_json, safe=False)
+            
         except Exception as e:
             return HttpResponse(str(e), status=500)
         
@@ -97,44 +160,63 @@ def handle_game_data(request):
                 "platform": game_data["platform"],
                 "publisher": game_data["publisher"],
                 "developer": game_data["developer"],
-                "release_Date": game_data["release_date"],
+                "release_date": game_data["release_date"],
                 "freetogame_profile_url": game_data["freetogame_profile_url"],
-                "minumum_system_requirements": game_data["minimum_system_requirements"],
+                "minimum_system_requirements": game_data["minimum_system_requirements"],
                 "screenshots": game_data["screenshots"],
             }
         )
-        print(game)
+        print(game.api_id)
         return game
     
-    # save game data to my database when user wants to add to favorite game library
+    # 
     if request.method == 'POST':
         try:
+            # save game data to my database when user wants to add to favorite game library
             if request.user.is_authenticated:
                 game_data = request.data # Deserialize the game data from the request body
-                # print('game_data =====', game_data)
+                # print('game_data =====', game_data['search_value'])
                 
                 game_object = process_game_data(game_data)
                 # print(game_object)
                 
-                status = request.POST['status']  # or get the status from the request, e.g. request.POST['status']
+                my_game_status = game_data['my_game_status']  # or get the status from the request, e.g. request.POST['status']
 
                 favorite, created = Favorite_game.objects.get_or_create(user=request.user, game=game_object)
                 # if fav game already exist for that specific game, created will be set as True
                 if not created: 
-                    if favorite.status == status: # If the favorite status is same as previous, DELETE
-                        favorite.delete()
-                        return JsonResponse({'success': True, 'message': 'status undone/deleted.'})
+                    if favorite.my_game_status == my_game_status: # If the favorite status is same as previous, leave it as it is
+                        return JsonResponse({'success': True, 'message': 'status unchanged.'})
                     else: # Or change the status
-                        favorite.status = status
+                        favorite.my_game_status = my_game_status
                         favorite.save()
                         return JsonResponse({'success': True, 'message': 'status updated.'})
                 else: # If just created, then add status to the favorite game
-                    favorite.status = status
+                    favorite.my_game_status = my_game_status
                     favorite.save()
                     return JsonResponse({'success': True, 'message': 'status added.'})
 
                 # return JsonResponse({'success': True})
             else:
+                return JsonResponse({'success': False, 'message': 'User not authenticated'})
+        except Exception as e:
+            print(e)
+            return JsonResponse({'success': False, 'message': str(e)})
+    
+    # delete functionality
+    if request.method == 'PUT':
+        try:
+            if request.user.is_authenticated:
+                python_dict = dict(request.data)
+                dict_value = python_dict['api_id']
+                game_id_found = Game.objects.filter(api_id = dict_value).values_list('id', flat=True)
+                delete_game_from_my_list = Favorite_game.objects.filter(user=request.user, game_id = game_id_found[0])
+                if delete_game_from_my_list:
+                    delete_game_from_my_list.delete()
+                    return JsonResponse({'success': True, 'message': 'succesfully deleted'})
+                else:
+                    return JsonResponse({'success': False, 'message': 'Game not found.'})
+            else: 
                 return JsonResponse({'success': False, 'message': 'User not authenticated'})
         except Exception as e:
             print(e)

@@ -10,8 +10,9 @@ from .models import Rating
 api_view(['POST', 'GET'])
 def handle_rating(request):
     if request.method == 'POST':
-        api_id = request.POST['api_id']
-        rating_choice = request.POST['value']
+        jsons = json.loads(request.body)
+        api_id = jsons['api_id']
+        rating_choice = jsons['value']
         try:
             if request.user.is_authenticated: # check to see if user is sign_in
                 # get_or_create Django method checks whether the instance of Rating model with the given 'user' and 'id' already exist or not.

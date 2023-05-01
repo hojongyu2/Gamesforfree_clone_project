@@ -18,28 +18,12 @@ export const userSignUp = async (userDataObj) => {
     }
     try {
         // Send the request using FormData
-        const response = await axiosWithCSRF.post("user/", formData);
+        const response = await axiosWithCSRF.post("user", formData);
         return { success: response.data };
     } catch (e) {
         console.log(e);
         return { success: false, error: e.message };
     }
-
-    ////// JSON object example 
-    // try{
-    //     let response = await axiosWithCSRF.post("user/", {
-    //         email,
-    //         first_name,
-    //         last_name,
-    //         password,
-    //         profile_pic,
-    //         signup,
-    //     })
-    //     return {success: response.data}
-    // } catch (e) {
-    //     console.log(e)
-    //     return {success: false, error: e.message}
-    // }
 }
 
 export const userLogin = async (userDataObj) => {
@@ -49,6 +33,7 @@ export const userLogin = async (userDataObj) => {
         password,
         login,
     })
+    // console.log(response)
     return response.data
 }
 
@@ -56,5 +41,6 @@ export const userLogout = async () => {
     const response = await axiosWithCSRF.put("user", {
         logout: true
     })
+    console.log(response)
     return response.data.success
 }

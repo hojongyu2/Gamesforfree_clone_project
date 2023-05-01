@@ -1,8 +1,6 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from rest_framework.decorators import api_view
 import json
-from django.core import serializers
 # import model
 from .models import Review
 # Create your views here.
@@ -10,8 +8,9 @@ from .models import Review
 api_view(['POST', 'GET'])
 def handle_review(request):
     if request.method == 'POST':
-        api_id = request.POST['api_id']
-        user_review = request.POST['user_review']
+        jsons = json.loads(request.body)
+        api_id = jsons['api_id']
+        user_review = jsons['user_review']
         try:
             if request.user.is_authenticated: # check to see if user is sign_in
                 new_review = Review.objects.create(user=request.user, game_api_id=api_id, content=user_review)
@@ -27,9 +26,16 @@ def handle_review(request):
         api_id = request.GET.get('api_id') # get api_id from query string
         try:
             all_reviews_by_game_id = Review.objects.filter(game_api_id=api_id)
-            serialized_reviews = serializers.serialize('json', all_reviews_by_game_id) # serialize the queryset into JSON format before returning it in the JsonResponse.
-            parsed_serialized_reviews = json.loads(serialized_reviews) # then deserialize the JSON string into Python objects so that It can be send over to the frontend
-            fields_list = [review['fields'] for review in parsed_serialized_reviews] # create new list that containing only the 'fields' dictionaries
+            fields_list = []
+            for review in all_reviews_by_game_id: # custom serialization function 
+                fields_list.append({
+                    'username': review.user.username,
+                    'random_profile_pic': review.user.random_profile_pic,
+                    'game_api_id': review.game_api_id,
+                    'content': review.content,
+                    'created_at': review.created_at,
+                    'updated_at': review.updated_at
+                })
             return JsonResponse({'success': True, 'data': fields_list})
         except Exception as e:
             print(e)
