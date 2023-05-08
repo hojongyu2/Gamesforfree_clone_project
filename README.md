@@ -8,5 +8,32 @@ This is a SQL data schema created using DrawSQL, which represents the relationsh
 
 ![drawSQL-gamesforfree-export-2023-04-11](https://user-images.githubusercontent.com/98355250/231060710-44f7f0f0-e279-4bce-affc-9a7ac645e892.png)
 
+/br
+## Table of Contents
 
+- [Getting Started](#getting-started)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+
+## Getting Started
+
+Follow these instructions to set up the project locally.
+
+### Prerequisites
+
+- Python 3.8 or higher
+- Node.js 14.x or higher
+- npm 6.x or higher
+- PostgreSQL
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/your_username/gamesforfree_clone_project.git
+cd gamesforfree_clone_project
 
