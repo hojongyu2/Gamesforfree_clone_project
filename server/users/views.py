@@ -11,7 +11,7 @@ import random
 import os
 from dotenv import load_dotenv
 load_dotenv()
-
+from django.middleware.csrf import get_token
 from .models import * # import model
 
 # Create your views here.
@@ -49,7 +49,7 @@ def auth_user(request):
                 try:
                     #django login function sets a session cookie in the browser containing an encrypted session ID(using user ID)
                     login(request._request, current_user)
-
+                    print("CSRF Token from request when login:", get_token(request))
                     #if user's profile picture and random_profile_pic are empty, then get a random picture 
                     if not current_user.random_profile_pic:
                         url = "https://pexelsdimasv1.p.rapidapi.com/v1/search"
@@ -102,6 +102,7 @@ def auth_user(request):
                 # print('_auth_user_id' in request.session)
                 # when logout is called, it will clears the user's session data so it prevent other user's to access previous user's session data.
                 logout(request)
+                print("CSRF Token from request when signout:", get_token(request))
                 if '_auth_user_id' not in request.session: #To check if the session has been cleared
                     return JsonResponse({'success': True})
                 else:
