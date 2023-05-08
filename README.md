@@ -31,6 +31,10 @@ The project is almost complete, and I'm still working on deploying it to the clo
 - [FreetoGame API](https://www.freetogame.com/api-doc): Used for sourcing game data.
 - [Pexels API](https://www.pexels.com/api/): Used for generating random user profile pictures.
 
+## Future Updates
+
+- **Gmail Login Functionality**: Integrate Gmail login to allow users to sign in using their Google accounts.
+
 ## Contact
 
 - Ho Jong Yu - yuhojo91@gmail.com
