@@ -19,8 +19,8 @@ The project is complete, and I'm still working on deploying it to the cloud. Onc
 
 1. **Login / Signup**: Users can create a new account or log in to an existing one.
 2. **Home**: Browse featured games and explore various game categories.
-3. **Search**: Find games by title or filter games based on criteria such as genre, platform, and developer.
-4. **Pagination**: Easily browse large collections of games with a user-friendly pagination system.
+3. **Search**: Find games by entering matching letters in the game title.
+4. **Filter, Sort, and Pagination**: Refine game listings by applying filters based on criteria such as genre, platform, and more. Sort games based on criteria such as popularity, release date, or alphabetical order. Easily browse large collections of games with a user-friendly pagination system.
 5. **Game Details**: View detailed information about a game, including screenshots, description, release date, and developer information. Users can also add the game to their personal library, rate, and review the game.
 6. **Ratings and Reviews**: Users can leave ratings and reviews for games, contributing to a more comprehensive understanding of each game's quality.
 7. **My Favorite Game List**: Manage the user's personal game library, where they can view and remove games they've added.
@@ -29,6 +29,18 @@ The project is complete, and I'm still working on deploying it to the cloud. Onc
 
 ### Homepage
 ![Main](https://github.com/hojongyu2/Gamesforfree_clone_project/assets/98355250/4fa08e9a-62a6-4ace-9fc2-a476d594dafe)
+
+### Game Details
+![GameDetails](https://github.com/hojongyu2/Gamesforfree_clone_project/assets/98355250/6c362aeb-b691-4f4e-918f-4136ce7c573b)
+
+### Search Results
+![Search](https://github.com/hojongyu2/Gamesforfree_clone_project/assets/98355250/d46839fa-4272-4197-a99a-1c5e5737d632)
+
+### Filter, Sort and Pagenation
+![FilterSortAndPageNation](https://github.com/hojongyu2/Gamesforfree_clone_project/assets/98355250/0bf4325d-0119-49df-bbb9-c3c3515eb356)
+
+### My Favorite Game List
+![MyGamePage](https://github.com/hojongyu2/Gamesforfree_clone_project/assets/98355250/d34d4c08-2385-47e2-a33f-67b490c978d5)
 
 ## Data Schema
 ![drawSQL-gamesforfree-export-2023-04-11](https://user-images.githubusercontent.com/98355250/231060710-44f7f0f0-e279-4bce-affc-9a7ac645e892.png)
