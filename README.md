@@ -7,6 +7,8 @@ This project is a recreation of the popular gaming website FreetoGame. The proje
 
 - [Live Demo](#live-demo)
 - [Features](#features)
+- [Demo Screenshots](#demo-screenshots)
+- [Data Schema](#data-schema)
 - [APIs Used](#apis-used)
 - [License](#license)
 - [Contact](#contact)
