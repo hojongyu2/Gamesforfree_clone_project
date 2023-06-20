@@ -32,7 +32,7 @@ export default function Signup() {
 
   const onSubmitSignIn = async (e, userInfo) => {
     e.preventDefault();
-    // console.log(userInfo)
+
     if (userInfo.password !== userInfo.confirmPassword) {
       setErrorMessage("Password does not match each other");
       return;

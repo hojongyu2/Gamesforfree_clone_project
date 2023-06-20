@@ -38,7 +38,7 @@ export default function GameCardWithReviews({ data }) {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getAllReviews(id);
-      //   console.log(response);
+
       const sortedReviews = response.data.sort(
         (a, b) => new Date(a.created_at) - new Date(b.created_at)
       );

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { gameContext } from '../context/GameContext';
 import { useContext } from 'react';
 //MUI
@@ -23,23 +23,6 @@ export default function FavoriteGameCard({ data }) {
     // Screenshots valiations. If the data is not in an Array format, then set it as an empty array.
     const validScreenshots = Array.isArray(screenshots) ? screenshots : [];
     const images = [thumbnail, ...validScreenshots.map((image) => image.image)];
-
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const intervalRef = useRef(null); // This useRef will store value. 
-    //In this case, It will store the interval created by the setInterval. 
-    //This allows you to access the current interval value across renders without causing a re-render when the interval reference changes.
-
-    const cardRef = useRef(null);
-
-    const handleMouseEnter = () => {
-        intervalRef.current = setInterval(() => {
-            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-        }, 1500);
-    };
-
-    const handleMouseLeave = () => {
-        clearInterval(intervalRef.current);
-    };
 
     //useTheme hook from MUI. 
     const theme = useTheme()
@@ -71,7 +54,7 @@ export default function FavoriteGameCard({ data }) {
     }
 
     return (
-        <Box ref={cardRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} sx={{
+        <Box sx={{
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -113,7 +96,6 @@ export default function FavoriteGameCard({ data }) {
                             height: "100%",
                             objectFit: "fill",
                             position: "absolute",
-                            opacity: index === currentImageIndex ? 1 : 0,
                             transition: "opacity 1s linear",
                         }}
                     />

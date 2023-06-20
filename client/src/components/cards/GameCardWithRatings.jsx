@@ -93,7 +93,7 @@ export default function GameCardWithRatings({ data }) {
             alert('You must be signed in to perform this action')
         }
         setAnchorEl(null);
-        // console.log(status)
+
         const { id, ...restData } = data
         const updatedData = { //using object destructure to change key named 'id' to 'api_id'
             ...restData,

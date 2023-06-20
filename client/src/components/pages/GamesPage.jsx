@@ -9,7 +9,7 @@ import GenreTagMenu from "../menu/GenreTagMenu";
 import SortByMenu from "../menu/SortByMenu";
 import SearchAndSortGameCard from "../cards/SearchAndSortGameCard";
 
-import { Box, Link, Typography, useTheme } from "@mui/material";
+import { Box, Container, Link, Typography, useTheme } from "@mui/material";
 import { axiosWithCSRF } from "../../utilities/axiosWithCSRF";
 
 // useLocation allows to get query from url

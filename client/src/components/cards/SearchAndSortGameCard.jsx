@@ -23,29 +23,11 @@ export default function SearchAndSortGameCard({ data }) {
   const images = [thumbnail, ...validScreenshots.map((image) => image.image)];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const intervalRef = useRef(null); // This useRef will store value.
-  //In this case, It will store the interval created by the setInterval.
-  //This allows you to access the current interval value across renders without causing a re-render when the interval reference changes.
-
-  const cardRef = useRef(null);
-
+  
   const theme = useTheme();
-
-  const handleMouseEnter = () => {
-    intervalRef.current = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 1500);
-  };
-
-  const handleMouseLeave = () => {
-    clearInterval(intervalRef.current);
-  };
 
   return (
     <Box
-      ref={cardRef}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       sx={{
         display: "flex",
         flexWrap: "wrap",

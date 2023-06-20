@@ -4,7 +4,7 @@ import RecommendationCardList from "../homePageComponents/RecommendationCardList
 import RecentlyAddedCardList from "../homePageComponents/RecentlyAddedCardList"
 import MostPlayedCardList from "../homePageComponents/MostPlayedCardList"
 
-import { Box } from "@mui/material"
+import { Box, Container } from "@mui/material"
 import { userContext } from "../context/UserContext"
 import { useContext } from "react"
 

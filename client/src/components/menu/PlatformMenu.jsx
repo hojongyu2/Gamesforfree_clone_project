@@ -7,7 +7,7 @@ import { Box, Link, Typography, useTheme } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import WindowIcon from "@mui/icons-material/Window";
 import ComputerIcon from "@mui/icons-material/Computer";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
 
 export default function PlatformMenu({ category = 'mmorpg' }) {
@@ -16,7 +16,7 @@ export default function PlatformMenu({ category = 'mmorpg' }) {
 
 
   const theme = useTheme();
-  const navigate = useNavigate()
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 

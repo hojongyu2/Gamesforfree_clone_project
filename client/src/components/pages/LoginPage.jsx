@@ -25,7 +25,7 @@ export default function LoginPage() {
   const onSubmitLogin = async (e, userData) => {
     e.preventDefault();
     const response = await userLogin(userData);
-    console.log(response)
+
     if (response.success === true) {
       signInUser(response);
       navigate("/");

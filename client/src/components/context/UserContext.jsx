@@ -11,7 +11,7 @@ export default function UserContextProvider(props){
     const [ user, setUser ] = useState(null)
     const signInUser = (userData) => setUser(userData)
     const signOutUser = () => setUser(undefined)
-    // console.log(user)
+
     // useEffect will call asynchronous function to make an HTTP GET request to get currently sign_in user
     useEffect(()=>{
         const fetchCurrentSignedInUser = async () => {

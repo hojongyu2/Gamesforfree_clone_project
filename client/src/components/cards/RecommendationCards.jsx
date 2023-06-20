@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Button, Card, CardContent, CardMedia, Link, Typography, useTheme } from '@mui/material';
 
 export default function RecommendationCards({ data }) {
@@ -7,40 +7,12 @@ export default function RecommendationCards({ data }) {
     thumbnail = "",
     images = [], } = data
 
-
-  const [isHovered, setIsHovered] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentImageUrl, setCurrentImageUrl] = useState(thumbnail);
-  const slideInterval = 2000; 
-  const timeoutRef = useRef(null);
+
   const theme = useTheme()
-
-  useEffect(() => {
-    if (isHovered && images.length > 0) {
-      setCurrentImageUrl(images[currentImageIndex]);
-      timeoutRef.current = setTimeout(() => {
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-      }, slideInterval);
-    } else {
-      setCurrentImageUrl(thumbnail);
-    }
-    return () => clearTimeout(timeoutRef.current);
-  }, [isHovered, currentImageIndex, images, thumbnail]);
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    setCurrentImageIndex(0);
-  };
-
 
   return (
     <Card
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       sx={{
         maxWidth: 300,
         transition: 'transform 0.2s ease-in-out',

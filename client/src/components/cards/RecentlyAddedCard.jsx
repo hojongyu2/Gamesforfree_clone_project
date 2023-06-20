@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 
 import { Box, Button, Card, CardMedia, Typography, useTheme } from '@mui/material';
 import WindowIcon from '@mui/icons-material/Window';
@@ -17,27 +17,12 @@ export default function RecentlyAddedCard({ data }) {
     const images = [thumbnail, ...validScreenshots.map((image) => image.image)];
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const intervalRef = useRef(null); // This useRef will store value. 
-    //In this case, It will store the interval created by the setInterval. 
-    //This allows you to access the current interval value across renders without causing a re-render when the interval reference changes.
-
-    const cardRef = useRef(null);
-
-    const handleMouseEnter = () => {
-        intervalRef.current = setInterval(() => {
-            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-        }, 1500);
-    };
-
-    const handleMouseLeave = () => {
-        clearInterval(intervalRef.current);
-    };
 
     //useTheme hook from MUI. 
     const theme = useTheme()
 
     return (
-        <Box ref={cardRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} sx={{
+        <Box  sx={{
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-between',
