@@ -1,7 +1,5 @@
-/env/
-/.env/
+venv
 .env
-env
 __pycache__/
 __pycache__
 media
