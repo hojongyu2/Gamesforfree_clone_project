@@ -88,6 +88,7 @@ export default function GamesPage() {
             alignItems: "center",
             flexWrap: "wrap",
             marginTop: "20px",
+            gap:2
           }}
         >
           {visibleItems.map((gameData) => {

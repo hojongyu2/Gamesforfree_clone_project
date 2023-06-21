@@ -5,7 +5,7 @@ import { getGameDetailById } from "../../utilities/gameDataAxios"
 import GameCardWithRatings from "../cards/GameCardWithRatings"
 
 //Mui
-import { Box, useTheme } from "@mui/material"
+import { Box } from "@mui/material"
 import GameCardWithReviews from "../cards/GameCardWithReviews"
 
 export default function GameInfoByIdPage() {
@@ -18,25 +18,22 @@ export default function GameInfoByIdPage() {
         setGameDataById([response])
     }, [])
 
-    const theme = useTheme()
-
     return (
         <Layout>
-            <Box 
+            <Box
                 sx={{
-                    height:'100%',
+                    height: '100%',
                     position: 'relative',
                     backgroundSize: 'cover',
-                    backgroundPosition: 'center',
                     backgroundImage:
-                    `linear-gradient(to bottom, rgba(60, 60, 60, 0.9), rgba(39, 43, 48, 1)), url(${backgroundImage})`,}}
+                        `linear-gradient(to bottom, rgba(60, 60, 60, 0.8), rgba(39, 43, 48, 1)), url(${backgroundImage})`,
+                }}
             >
                 <Box sx={{
-                    display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', gap: 5,
-                    [theme.breakpoints.down('sm')]: { // Styles for screens smaller than 'sm' breakpoint
-                        width: '200px',
-                        height: '100px',
-                    }
+                    display: 'flex',
+                    flexDirection: { xs: 'column', sm: 'row' }, // column on small screens, row on larger
+                    justifyContent: 'center',
+                    gap: 5,
                 }}>
                     <Box>
                         {gameDataById.map((data, index) => {

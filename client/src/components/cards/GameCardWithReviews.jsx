@@ -287,7 +287,7 @@ export default function GameCardWithReviews({ data }) {
                     variant="body1"
                     sx={{ color: theme.palette.primary.light }}
                   >
-                    '2daysago'
+                    '2 daysago'
                   </Typography>
                 </Box>
 

@@ -20,9 +20,7 @@ export default function MyFavoriteGamesPage () {
                 </Box>
                 {myFavGameList.map((game) => {
                     return (
-                        <Box>
-                            <FavoriteGameCard  data={game} />
-                        </Box>
+                        <FavoriteGameCard  data={game} />
                     )
                 })}
             </Box>

@@ -122,14 +122,6 @@ export default function GameCardWithRatings({ data }) {
         <Box sx={{ display: 'inline-block', maxWidth: 345, gap: 3, marginTop:'20px' }}>
             <Card sx={{
                 position: 'relative', width: '340px', height: '150px', overflow: 'hidden', marginTop: '10px', marginBottom:'10px',
-                [theme.breakpoints.down('md')]: { // Styles for screens smaller than 'md' breakpoint
-                    width: '340px',
-                    height: '150px',
-                },
-                [theme.breakpoints.down('sm')]: { // Styles for screens smaller than 'sm' breakpoint
-                    width: '200px',
-                    height: '100px',
-                },
             }}>
 
                 <StyledCardMedia

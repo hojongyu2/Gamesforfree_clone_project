@@ -59,16 +59,12 @@ export default function FavoriteGameCard({ data }) {
             flexDirection: 'row',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
-            width: { xs: '400px', sm: '600px', md: '1000px' },
+            minWidth:'200px',
+            maxWidth:'1000px',
+            width:'100%',
             backgroundColor: theme.palette.primary.light,
             marginBottom: '20px',
             padding:'10px',
-            [theme.breakpoints.down('md')]: { // Styles for screens smaller than 'md' breakpoint
-                gap: 1,
-            },
-            [theme.breakpoints.down('sm')]: { // Styles for screens smaller than 'sm' breakpoint
-                gap: 0.5,
-            },
             transition: 'transform 0.2s ease-in-out',
             ':hover': {
                 transform: 'scale(1.02)',
@@ -76,14 +72,6 @@ export default function FavoriteGameCard({ data }) {
         }}>
             <Card sx={{
                 position: 'relative', width: '200px', height: '100px', overflow: 'hidden', margin: '20px',
-                [theme.breakpoints.down('md')]: { // Styles for screens smaller than 'md' breakpoint
-                    width: '200px',
-                    height: '100px',
-                },
-                [theme.breakpoints.down('sm')]: { // Styles for screens smaller than 'sm' breakpoint
-                    width: '150px',
-                    height: '100px',
-                },
             }}>
                 {images.map((image, index) => (
                     <CardMedia
@@ -108,7 +96,6 @@ export default function FavoriteGameCard({ data }) {
                 justifyContent: 'center',
                 alignItems: 'center',
                 gap: 8,
-
             }}>
                 <Link href={`${api_id}`}>
                     <Button sx={{ color: theme.palette.primary.extraLight }}>{title}</Button>

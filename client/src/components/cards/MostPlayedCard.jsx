@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Box, Card, CardMedia, useTheme } from '@mui/material';
 
 export default function MostPlayedCard({ data }) {
-    const {id = "",
+    const { id = "",
         thumbnail = "",
         game_url = "",
         screenshots = [],
@@ -20,7 +20,7 @@ export default function MostPlayedCard({ data }) {
         <Box sx={{
             display: 'flex',
             flexWrap: 'wrap',
-            width: { xs: '100px', sm: '200px', md: '300px' },
+            width: '300px',
             backgroundColor: theme.palette.primary.light,
             marginBottom: '20px',
             transition: 'transform 0.2s ease-in-out',
@@ -30,14 +30,6 @@ export default function MostPlayedCard({ data }) {
         }}>
             <Card sx={{
                 position: 'relative', width: '300px', height: '200px', overflow: 'hidden',
-                [theme.breakpoints.down('md')]: { // Styles for screens smaller than 'md' breakpoint
-                    width: '200px',
-                    height: '100px',
-                },
-                [theme.breakpoints.down('sm')]: { // Styles for screens smaller than 'sm' breakpoint
-                    width: '100px',
-                    height: '100px',
-                },
             }}>
                 {images.map((image, index) => (
                     <CardMedia

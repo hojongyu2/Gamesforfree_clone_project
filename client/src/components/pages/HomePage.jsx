@@ -10,7 +10,7 @@ import { useContext } from "react"
 
 
 export const Homepage = () => {
-    const {user} = useContext(userContext)
+    const { user } = useContext(userContext)
     return (
         <Layout>
             <Box display={"flex"} flexDirection={"column"} justifyContent={'flex-start'} alignItems={'center'}>
@@ -18,7 +18,13 @@ export const Homepage = () => {
                     {!user && <HomePageGetStarted />}
                     <RecommendationCardList />
                 </Box>
-                <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} flexWrap={"wrap"} gap={2}>
+                <Box sx={{
+                    display: { xs: 'block', sm: 'flex' },
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    justifyContent: 'center',
+                    flexWrap: 'wrap',
+                    gap: 2
+                }}>
                     <RecentlyAddedCardList />
                     <MostPlayedCardList />
                 </Box>

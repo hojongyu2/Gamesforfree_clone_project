@@ -22,45 +22,39 @@ export default function RecentlyAddedCard({ data }) {
     const theme = useTheme()
 
     return (
-        <Box  sx={{
+        <Box sx={{
             display: 'flex',
-            flexDirection: 'row',
+            flexDirection: { xs: 'column', sm: 'row' }, // column for small screens, row for larger screens
             justifyContent: 'space-between',
             flexWrap: 'wrap',
-            width: { xs: '200px', sm: '300px', md: '600px' },
-            height: '80px',
             backgroundColor: theme.palette.primary.light,
             transition: 'transform 0.2s ease-in-out',
             ':hover': {
-                transform: 'scale(1.02)',
+                transform: 'scale(1.1)',
             },
-        }}>
+        }}
+        >
             <Card sx={{
-                position: 'relative', width: '120px', height: '80px', overflow: 'hidden',
-                [theme.breakpoints.down('md')]: { // Styles for screens smaller than 'md' breakpoint
-                    width: '200px',
-                    height: '100px',
-                },
-                [theme.breakpoints.down('sm')]: { // Styles for screens smaller than 'sm' breakpoint
-                    width: '150px',
-                    height: '100px',
-                },
+                position: 'relative',
+                width: { xs: '100%', sm: '120px' },
+                height: '80px',
+                overflow: 'hidden',
             }}>
-                    {images.map((image, index) => (
-                        <CardMedia
-                            key={index}
-                            component="img"
-                            src={image}
-                            alt={title}
-                            sx={{
-                                width: "100%",
-                                height: "100%",
-                                objectFit: "fill",
-                                opacity: index === currentImageIndex ? 1 : 0,
-                                transition: "opacity 1s linear",
-                            }}
-                        />
-                    ))}
+                {images.map((image, index) => (
+                    <CardMedia
+                        key={index}
+                        component="img"
+                        src={image}
+                        alt={title}
+                        sx={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "fill",
+                            opacity: index === currentImageIndex ? 1 : 0,
+                            transition: "opacity 1s linear",
+                        }}
+                    />
+                ))}
             </Card>
 
             <Box sx={{
@@ -70,7 +64,7 @@ export default function RecentlyAddedCard({ data }) {
                 alignItems: 'center',
             }}>
                 <Typography sx={{ color: theme.palette.primary.extraLight }}>{title}</Typography>
-                <Typography sx={{ color: theme.palette.primary.main, backgroundColor: theme.palette.primary.extraLight, borderRadius:'5px', fontSize:'10px'}}>{genre}</Typography>
+                <Typography sx={{ color: theme.palette.primary.main, backgroundColor: theme.palette.primary.extraLight, borderRadius: '5px', fontSize: '10px' }}>{genre}</Typography>
 
             </Box>
 
