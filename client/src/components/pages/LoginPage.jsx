@@ -1,12 +1,10 @@
-import * as React from "react";
 import { Box } from "@mui/system";
 import Layout from "../layout/Layout";
 import { Container } from "@mui/system";
 import { Button, TextField, Typography, useTheme } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { userContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { userLogin } from "../../utilities/userAuthAxios";
 import gamesforfree3 from "../../assets/gamesforfree3.png";
 import gamesforfree1 from "../../assets/gamesforfree1.png";
@@ -22,6 +20,7 @@ export default function LoginPage() {
     login: true,
   });
 
+  
   const onSubmitLogin = async (e, userData) => {
     e.preventDefault();
     const response = await userLogin(userData);

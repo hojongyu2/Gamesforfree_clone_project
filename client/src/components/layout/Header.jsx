@@ -17,7 +17,6 @@ import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import SearchIcon from "@mui/icons-material/Search";
 import CollectionsIcon from "@mui/icons-material/Collections";
@@ -248,7 +247,7 @@ export default function Header() {
               color="inherit"
             >
               {user && (
-                <img src={user.random_profile_pic}
+                <img src={user.user.random_profile_pic}
                 style={{width:'30px', height:'30px', borderRadius:'100%', marginRight:'10px'}} />
               )}
               {user && (

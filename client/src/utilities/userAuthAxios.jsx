@@ -33,7 +33,7 @@ export const userLogin = async (userDataObj) => {
         password,
         login,
     })
-    // console.log(response)
+    console.log(response.data)
     return response.data
 }
 
@@ -41,6 +41,5 @@ export const userLogout = async () => {
     const response = await axiosWithCSRF.put("user", {
         logout: true
     })
-    console.log(response)
     return response.data.success
 }
