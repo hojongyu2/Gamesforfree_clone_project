@@ -33,7 +33,6 @@ export const userLogin = async (userDataObj) => {
         password,
         login,
     })
-    console.log(response.data)
     return response.data
 }
 
