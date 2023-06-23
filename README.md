@@ -15,7 +15,7 @@ This project is a recreation of the popular gaming website FreetoGame. The proje
 
 ## Live Demo
 
-The project is complete, and I'm still working on deploying it to the cloud. Once it is deployed, you will be able to visit the live demo of the Gamesforfree Clone Project here soon.
+[Project Website](https://gameforfree.net/)
 
 ## Features
 
