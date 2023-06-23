@@ -42,16 +42,17 @@ def auth_user(request):
         elif 'login' in request.data:
             email = request.data['email']
             password = request.data['password']
-            current_user = authenticate(username = email, password=password) # If authenticated, this will return User Obj containing user information, otherwise, return none.
-            print(current_user.profile_pic)
-            # only authenticate if the current user is active and exist
-            if current_user and current_user.is_active == True:
+            current_user = authenticate(username=email, password=password)
+
+            if current_user is not None and current_user.is_active:
+                # User is authenticated and active
                 try:
-                    #django login function sets a session cookie in the browser containing an encrypted session ID(using user ID)
-                    login(request._request, current_user)
+                    print(current_user.profile_pic.url if current_user.profile_pic else "No profile pic")
+                    login(request, current_user)
                     print("CSRF Token from request when login:", get_token(request))
-                    #if user's profile picture and random_profile_pic are empty, then get a random picture 
+
                     if not current_user.random_profile_pic:
+                        # Fetch a random picture if user's random_profile_pic is empty
                         url = "https://pexelsdimasv1.p.rapidapi.com/v1/search"
                         querystring = {"query":"profile picture","locale":"en-US","per_page":"50","page":"1"}
                         headers = {
@@ -62,40 +63,31 @@ def auth_user(request):
                         }
                         response = requests.get(url, headers=headers, params=querystring)
                         json_data = response.json()
-                        photos = json_data.get('photos', []) # get the value of key from json dictionary
-                        original_urls = []
-
-                        for photo in photos:
-                            original_url = photo['src']['original']
-                            original_urls.append(original_url)
-                            
-                        random_picture = random.sample(original_urls, 1)[0]
-                        # SAVE RANDOM PICTURE TO MY DATABASE NAMED random_profile_pic
-                        # random_profile_pic will only store random profile pic and I have seperate model for actual profile picture
+                        photos = json_data.get('photos', []) 
+                        original_urls = [photo['src']['original'] for photo in photos]
+                        
+                        random_picture = random.choice(original_urls)
                         current_user.random_profile_pic = random_picture
                         current_user.save()
-                        response_data = {
-                            'email': current_user.email,
-                            'level': current_user.level,
-                            'profile_pic': None,
-                            'random_profile_pic': random_picture
-                        }
-                        return JsonResponse({'success': True, 'user': response_data, 'random_profile_pic': random_picture})
-                    
+                        profile_pic = None
                     else:
-                        response_data = {
-                            'email': current_user.email,
-                            'level': current_user.level,
-                            'profile_pic': current_user.profile_pic.url if current_user.profile_pic else None,
-                            'random_profile_pic': current_user.random_profile_pic
-                        }
-                        return JsonResponse({'success': True, 'user': response_data, 'random_profile_pic': current_user.random_profile_pic})
-                    
+                        profile_pic = current_user.profile_pic.url if current_user.profile_pic else None
+
+                    response_data = {
+                        'email': current_user.email,
+                        'level': current_user.level,
+                        'profile_pic': profile_pic,
+                        'random_profile_pic': current_user.random_profile_pic
+                    }
+                    return JsonResponse({'success': True, 'user': response_data})
                 except Exception as e:
                     print(e)
                     return JsonResponse({'success': False, 'message' : str(e)})
-                
-            return JsonResponse({'success': False})
+
+            else:
+                # User is not authenticated or is inactive
+                return JsonResponse({'success': False})
+
     elif request.method == 'PUT':
         if 'logout' in request.data:
             try:
